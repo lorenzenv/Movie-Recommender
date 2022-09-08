@@ -5,4 +5,6 @@ This project was completed in week 5 of the Spiced Data Science Bootcamp in Berl
 
 Insights were devided into Orders, Products and Employees.
 
-![](dashboard.gif)
+![](front_page.png)
+
+![](recommends.png)
