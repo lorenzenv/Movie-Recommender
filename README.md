@@ -1,10 +1,15 @@
 # *Movie Recommender*
-## KMeans, Flask, Heroku, Sparse Matrix
+## KMeans, Flask, Heroku and Sparse Matrices
 
-This project was completed in week 5 of the Spiced Data Science Bootcamp in Berlin. The goal was to take business data from a fictional company *(Northwind Trades)*, insert the data in a Postgres Database, deploy the database on an AWS RDS server and present some key business insights through the use of a Metabase dashboard.
+This project was completed in week 10 of the Spiced Data Science Bootcamp in Berlin. The goal was to create a Movie Recommender Webservice running on a Heroku Server.
 
-Insights were devided into Orders, Products and Employees.
+The front-end was build with Flask and Bootstrap. Predictions are made with a KMeans Model, trained on a database of movies and ratings.
+
+The model finds 10 similar users and shows their top five rated movies.
+
 
 ![](front_page.png)
+
+
 
 ![](recommends.png)
