@@ -1,5 +1,5 @@
 # *Movie Recommender*
-## KMeans, Flask, Heroku, the Fuzz and Sprase Matrices
+## KMeans, Flask, Heroku, theFuzz and Sprase Matrices
 
 This project was completed in week 10 of the Spiced Data Science Bootcamp in Berlin. The goal was to create a Movie Recommender Webservice running on a Heroku Server.
 
