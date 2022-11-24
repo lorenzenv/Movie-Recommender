@@ -12,9 +12,15 @@ ratings = pd.read_csv("ratings.csv")
 titles = movies['title'].str.partition(' (', True)
 movies['title'] = titles[0]
 
+"""to be used if using NN model"""
 with open('static/nn_new_recommender.pkl', 'rb') as file:
     model = pickle.load(file)
 
+with open('static/nmf_recommender.pkl', 'rb') as file:
+    NMF_model = pickle.load(file)
+
+with open('static/r_matrix.pkl', 'rb') as file:
+    R = pickle.load(file)
 
 def get_titles_from_query(query):
     result = []
@@ -65,6 +71,43 @@ def get_recommandations(query):
     print ("result_titles: ", result_titles)
 
     return result_titles
+
+
+
+def get_NMF_recommendations(query):
+    #query = {1: 5, 2: 4, 79091: 5, 56367: 1, 180987: 5}
+    print(query)
+    data = list(query.values())  # the ratings of the new user
+    row_ind = [0]*len(data)      # we use just a single row 0 for this user 
+    col_ind = list(query.keys()) # the columns (=movieId) of the ratings
+
+    # new user vector: needs to have the same format as the training data
+    user_vec = csr_matrix((data, (row_ind, col_ind)), shape=(1, R.shape[1]))
+
+    # user_vec -> encoding -> p_user_vec -> decoding -> user_vec_hat
+    scores = NMF_model.inverse_transform(NMF_model.transform(user_vec))
+
+    # convert to a pandas series
+    scores = pd.Series(scores[0])
+
+    # give a zero score to movies the user has allready seen
+    scores[query.keys()] = 0
+
+    # sort the scores from high to low 
+    scores = scores.sort_values(ascending=False)
+
+    # get the movieIds of the top 5 entries
+    recommendations = scores.head(5).index
+
+    result = movies.set_index('movieId').loc[recommendations]
+
+    result_titles = result['title'].values
+
+    print ("result_titles: ", result_titles)
+
+    return result_titles
+
+
 
 def get_rec_stars(movie_list):
     star_results = []
