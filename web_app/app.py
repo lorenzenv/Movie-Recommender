@@ -1,11 +1,11 @@
 from flask import Flask, request, render_template
-
+import webbrowser
 from utils import get_movie_info, get_poster_links, get_stars
 from recommender import get_NMF_recommendations, movies, get_titles_from_query, get_id_from_title, get_rec_stars
 #from recommender import get_recommandations, movies, get_titles_from_query, get_id_from_title, get_rec_stars
 from scipy.sparse import csr_matrix
 import os
-
+import time
 #if changing to NN model remove # from above and move to line above
 
 port = int(os.environ.get('PORT', 5000))
@@ -17,6 +17,8 @@ def landing_page():
     return render_template(
         "index.html"
         )
+time.sleep(2)
+webbrowser.open("http://127.0.0.1:5000")
 
 @app.route("/recommender/")
 def make_recommendations():
@@ -55,5 +57,3 @@ def make_recommendations():
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=port, debug=True)
-
-#need to add open web browser here
